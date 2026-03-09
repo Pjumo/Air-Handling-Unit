@@ -62,14 +62,13 @@ module ds1302_main_logic(
     output reg [7:0] o_month,
     output reg [7:0] o_year
 );
-
-    localparam IDLE         = 3'd0;
-    localparam CHOOSE_CMD   = 3'd1;
-    localparam CE_HIGH      = 3'd2;
-    localparam SEND_CMD     = 3'd3;
-    localparam READ_DATA    = 3'd4;
-    localparam CE_LOW       = 3'd5;
-    localparam STORE_DATA   = 3'd6;
+    localparam IDLE         = 4'd0;
+    localparam CHOOSE_CMD   = 4'd1;
+    localparam CE_HIGH      = 4'd2;
+    localparam SEND_CMD     = 4'd3;
+    localparam READ_DATA    = 4'd4;
+    localparam CE_LOW       = 4'd5;
+    localparam STORE_DATA   = 4'd6;
 
     localparam WAIT_TO_READ = 8'h00;
     localparam READ_SECOND  = 8'h81;
@@ -79,14 +78,21 @@ module ds1302_main_logic(
     localparam READ_MONTH   = 8'h89;
     localparam READ_YEAR    = 8'h8D;
 
-    localparam TIME_250ns   = 25;
+    localparam WRITE_SECOND = 8'h80;
+    localparam WRITE_MINUTE = 8'h80;
+    localparam WRITE_HOUR   = 8'h80;
+    localparam WRITE_DAY    = 8'h80;
+    localparam WRITE_MONTH  = 8'h80;
+    localparam WRITE_YEAR   = 8'h80;
+    localparam WRITE_WP     = 8'h8E;
 
-    reg [2:0] state;
+    localparam DIVIDER      = 50;
+
+    reg [3:0] state;
     reg [3:0] bit_cnt;  // bit 수
     reg [7:0] cmd_reg;  // read or write 과정에서 보낼 command
     reg [7:0] data_reg; // 읽어온 데이터 저장
-    reg sclk_state;     // 1: sclk 2MHz, 0: nothing
-    reg prev_sclk;      // 이전 clk의 sclk 저장
+    reg init_done;      // 모든 init 끝났는지 확인
 
     reg [21:0] counter;
     
@@ -98,7 +104,8 @@ module ds1302_main_logic(
             io_mode <= 0;
             o_data <= 0;
             bit_cnt <= 0;
-            sclk_state <= 0;
+            sclk <= 0;
+            init_done <= 0;
             cmd_reg <= WAIT_TO_READ;
 
             o_sec <= 0;
@@ -111,12 +118,13 @@ module ds1302_main_logic(
             case(state)
                 IDLE: begin
                     ce <= 0;
-                    sclk_state <= 0;
+                    sclk <= 0;
                     bit_cnt <= 0;
                     io_mode <= 0;   // 기본 output mode
+                    o_data <= 0;
                     cmd_reg <= WAIT_TO_READ;
 
-                    if(start_trigger) begin
+                    if(start_trigger && init_done) begin
                         state <= CHOOSE_CMD;
                     end
                 end
@@ -142,40 +150,52 @@ module ds1302_main_logic(
 
                 CE_HIGH: begin
                     ce <= 1;    // ce를 high (start)
-                    sclk_state <= 1;    // sclk 2MHz 파형 생성
                     state <= SEND_CMD;
-                    io_mode <= 1;
+                    io_mode <= 0;
                 end
 
                 SEND_CMD: begin
-                    if(sclk && !prev_sclk) begin    // sclk 상승에지마다
-                        o_data <= cmd_reg[bit_cnt];
-                        bit_cnt <= bit_cnt + 1;
+                    if(counter >= DIVIDER - 1) begin
+                        counter <= 0;
+                        sclk <= ~sclk;
+                        if(!sclk) begin // 상승엣지
+                            o_data <= cmd_reg[bit_cnt];
+                            bit_cnt <= bit_cnt + 1;
 
-                        if(bit_cnt >= 7) begin
-                            bit_cnt <= 0;
-                            state <= READ_DATA;
-                            io_mode <= 0;
+                            if(bit_cnt >= 7) begin
+                                bit_cnt <= 0;
+                                state <= READ_DATA;
+                                io_mode <= 1;
+                            end
                         end
+                    end else begin
+                        counter <= counter + 1;
                     end
                 end
 
                 READ_DATA: begin
-                    if(!sclk && prev_sclk) begin    // sclk 하강에지마다
-                        data_reg[bit_cnt] <= i_data;
-                        bit_cnt <= bit_cnt + 1;
+                    if(counter >= DIVIDER - 1) begin
+                        counter <= 0;
+                        sclk <= ~sclk;
+                        if(sclk) begin    // sclk 하강에지마다
+                            data_reg[bit_cnt] <= i_data;
+                            bit_cnt <= bit_cnt + 1;
 
-                        if(bit_cnt >= 7) begin
-                            bit_cnt <= 0;
-                            state <= CE_LOW;
+                            if(bit_cnt >= 7) begin
+                                bit_cnt <= 0;
+                                state <= CE_LOW;
+                            end
                         end
+                    end else begin
+                        counter <= counter + 1;
                     end
                 end
 
                 CE_LOW: begin
                     ce <= 0;
-                    sclk_state <= 0;
+                    sclk <= 0;
                     state <= STORE_DATA;
+                    io_mode <= 0;
                 end
 
                 STORE_DATA: begin
@@ -196,27 +216,6 @@ module ds1302_main_logic(
                     state <= IDLE;
                 end
             endcase
-        end
-    end
-
-    // sclk 생성
-    always @(posedge clk, posedge reset) begin
-        if(reset) begin
-            sclk <= 0;
-            counter <= 0;
-        end else begin
-            if(sclk_state) begin
-                if(counter >= TIME_250ns - 1) begin // 2MHz sclk
-                    counter <= 0;
-                    sclk <= ~sclk;
-                end else begin
-                    counter <= counter + 1;
-                end
-            end else begin
-                sclk <= 0;
-                counter <= 0;
-            end
-            prev_sclk <= sclk;
         end
     end
 

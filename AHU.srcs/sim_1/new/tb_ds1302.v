@@ -13,11 +13,8 @@ module tb_ds1302();
     wire [7:0] o_day;
     wire [7:0] o_month;
     wire [7:0] o_year;
-    
-    reg io_mode;
-    reg o_data;
+
     wire i_data;
-    assign ds1302_data = io_mode ? 1'bz : o_data;
     assign i_data = ds1302_data;
 
     ds1302_controller u_ds1302_controller(
@@ -43,6 +40,7 @@ module tb_ds1302();
         reset = 1; #100
         reset = 0; #200
 
-        start_trigger = 1;
+        start_trigger = 1; #5
+        start_trigger = 0;
     end
 endmodule
