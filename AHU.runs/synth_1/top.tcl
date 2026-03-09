@@ -90,6 +90,7 @@ OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/imports/new/btn_debouncer.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/control_tower.v
+  G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/data_receiver.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/data_sender.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/dht_controller.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/ds1302_controller.v

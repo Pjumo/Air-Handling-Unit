@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2021.1 (win64) Build 3247384 Thu Jun 10 19:36:33 MDT 2021
-| Date         : Mon Mar  9 09:32:46 2026
+| Date         : Mon Mar  9 18:59:43 2026
 | Host         : DESKTOP-0G8LKRK running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
 | Design       : top
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    19 |
-|    Minimum number of control sets                        |    19 |
+| Total control sets                                       |   308 |
+|    Minimum number of control sets                        |   308 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    52 |
+| Unused register locations in slices containing registers |   790 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    19 |
+| Total control sets |   308 |
 | >= 0 to < 4        |     4 |
-| >= 4 to < 6        |     3 |
-| >= 6 to < 8        |     5 |
-| >= 8 to < 10       |     1 |
-| >= 10 to < 12      |     0 |
+| >= 4 to < 6        |   185 |
+| >= 6 to < 8        |    10 |
+| >= 8 to < 10       |   101 |
+| >= 10 to < 12      |     1 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     6 |
+| >= 16              |     7 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,11 +58,11 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               8 |            3 |
-| No           | No                    | Yes                    |             108 |           32 |
+| No           | No                    | No                     |               2 |            2 |
+| No           | No                    | Yes                    |             188 |           63 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              22 |            6 |
-| Yes          | No                    | Yes                    |             146 |           47 |
+| Yes          | No                    | No                     |              39 |           14 |
+| Yes          | No                    | Yes                    |            1773 |          564 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -70,28 +70,317 @@ Table of Contents
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+---------------------------------------------------------------+------------------+------------------+----------------+--------------+
-|  Clock Signal  |                         Enable Signal                         | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+---------------------------------------------------------------+------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | u_btn_debouncer/btn_state                                     | reset_IBUF       |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | u_ds1302/u_ds1302_main_logic/ce_i_1_n_0                       | reset_IBUF       |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | u_uart_controller/u_uart_tx/tx_i_1_n_0                        | reset_IBUF       |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | u_ds1302/u_ds1302_main_logic/bit_cnt[2]_i_1_n_0               | reset_IBUF       |                1 |              3 |         3.00 |
-|  clk_IBUF_BUFG | u_ds1302/u_ds1302_main_logic/cmd_reg0                         | reset_IBUF       |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | u_uart_controller/u_data_sender/byte_cnt                      | reset_IBUF       |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | u_uart_controller/u_uart_tx/r_bit_cnt                         | reset_IBUF       |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/data_bit_cnt[5]_i_1_n_0   | reset_IBUF       |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG | u_ds1302/u_ds1302_main_logic/o_min0                           | reset_IBUF       |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG | u_ds1302/u_ds1302_main_logic/o_sec0                           | reset_IBUF       |                4 |              7 |         1.75 |
-|  clk_IBUF_BUFG | u_uart_controller/u_data_sender/tx_data[6]_i_1_n_0            | reset_IBUF       |                4 |              7 |         1.75 |
-|  clk_IBUF_BUFG | u_uart_controller/u_uart_tx/r_data                            | reset_IBUF       |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG |                                                               |                  |                3 |              8 |         2.67 |
-|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/high_time_cnt[15]_i_1_n_0 | reset_IBUF       |                4 |             16 |         4.00 |
-|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/hum_int[7]_i_1_n_0        | reset_IBUF       |                5 |             16 |         3.20 |
-|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/counter[21]_i_1_n_0       | reset_IBUF       |                6 |             22 |         3.67 |
-|  clk_IBUF_BUFG | u_ds1302/u_ds1302_main_logic/counter                          |                  |                6 |             22 |         3.67 |
-|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/data[39]_i_1_n_0          | reset_IBUF       |               10 |             40 |         4.00 |
-|  clk_IBUF_BUFG |                                                               | reset_IBUF       |               32 |            108 |         3.38 |
-+----------------+---------------------------------------------------------------+------------------+------------------+----------------+--------------+
++----------------+------------------------------------------------------------------+------------------+------------------+----------------+--------------+
+|  Clock Signal  |                           Enable Signal                          | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+------------------------------------------------------------------+------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | u_btn_debouncer/btn_state                                        | reset_IBUF       |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_tx/tx_i_1_n_0                           | reset_IBUF       |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/ce_i_1_n_0                               | reset_IBUF       |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG |                                                                  |                  |                2 |              2 |         1.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][12][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][13][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_rx/r_baud_tick_cnt                      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_rx/r_bit_cnt                            | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_tx/r_bit_cnt                            | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][11][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][10][3]_i_1_n_0      | reset_IBUF       |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][11][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/bit_cnt                                  | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][15][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][15][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][11][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][13][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][15][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][15][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][11][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][17][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][8][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][10][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][17][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][11][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][15][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][15][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][13][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][12][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][14][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][11][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][7][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][12][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][14][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][6][3]_i_1_n_0       | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][10][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][10][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][9][3]_i_1_n_0       | reset_IBUF       |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][13][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][12][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][9][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][7][3]_i_1_n_0       | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][9][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][17][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][11][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][6][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][7][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][13][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][9][3]_i_1_n_0       | reset_IBUF       |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][6][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][11][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][14][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][8][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][15][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][11][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][12][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][10][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][12][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][17][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][12][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][17][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][15][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][8][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][11][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][11][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][9][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][8][3]_i_1_n_0       | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][7][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][15][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][17][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][6][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][7][3]_i_1_n_0       | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][7][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][9][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][6][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][8][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][15][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][13][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][10][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][13][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][10][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][7][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][15][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][8][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][12][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][6][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][9][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][13][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][14][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][14][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][11][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][14][3]_i_1_n_0     | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][11][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][7][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][15][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][11][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][6][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][9][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][17][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][8][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][15][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][17][3]_i_1_n_0     | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][15][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][11][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][10][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][14][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][12][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][15][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][6][3]_i_1_n_0       | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][12][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][15][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][6][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][8][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][7][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][11][3]_i_1_n_0      | reset_IBUF       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][13][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][10][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][17][3]_i_1_n_0      | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][9][3]_i_1_n_0       | reset_IBUF       |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_sender/byte_cnt[4]_i_1_n_0              | reset_IBUF       |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/cmd_reg[3][0]                            | reset_IBUF       |                4 |              5 |         1.25 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_rx/E[0]                                 | reset_IBUF       |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_rx/rx_done_reg_0[0]                     | reset_IBUF       |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/cmd_reg[1][0]                            |                  |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/cmd_reg[1]_0[0]                          |                  |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/cmd_reg[1]_1[0]                          |                  |                3 |              6 |         2.00 |
+|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/data_bit_cnt[5]_i_1_n_0      | reset_IBUF       |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/rd_shifter_1                             | reset_IBUF       |                1 |              7 |         7.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_sender/tx_data[6]_i_1_n_0               | reset_IBUF       |                5 |              7 |         1.40 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_tx/r_data                               | reset_IBUF       |                2 |              7 |         3.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/counter                                  | reset_IBUF       |                2 |              7 |         3.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/cmd_reg[3]_1[0]                          |                  |                2 |              7 |         3.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/cmd_reg[3]_0[0]                          |                  |                2 |              7 |         3.50 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/shifter_0                                | reset_IBUF       |                3 |              7 |         2.33 |
+|  clk_IBUF_BUFG | u_uart_controller/u_uart_rx/data_out[7]_i_1_n_0                  | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][0][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/state_reg[2]_0[0]                        |                  |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/FSM_onehot_state[7]_i_1_n_0  | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][3][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][5][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][2][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][5][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][2][7]_i_1_n_0      | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/rd_data[7]_i_1_n_0                       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_ds1302/u_ds1302_logic/E[0]                                     | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][0][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][0][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][1][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][4][7]_i_1_n_0      | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][2][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][3][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][0][7]_i_1_n_0      | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][4][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][0][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][0][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][2][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][2][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][3][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][1][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][2][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][3][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][3][7]_i_1_n_0      | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][5][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][5][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][1][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[10][1][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[0][4][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[11][5][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][1][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][5][7]_i_1_n_0      | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][5][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][0][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][0][7]_i_1_n_0      | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][1][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][3][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][5][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][0][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][2][7]_i_1_n_0      | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][4][7]_i_1_n_0      | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[14][3][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][2][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[12][4][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[13][4][7]_i_1_n_0      | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][5][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][3][7]_i_1_n_0      | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][4][7]_i_1_n_0      | reset_IBUF       |                5 |              8 |         1.60 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][0][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][5][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][5][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][4][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][2][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][1][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][4][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][4][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][3][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][5][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][3][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][2][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][1][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][0][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][4][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][4][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][0][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][3][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][4][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][0][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][3][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][2][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][4][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][0][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][3][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][0][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[15][1][7]_i_1_n_0      | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][4][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][5][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][2][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][0][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][1][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][3][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[2][1][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][3][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][3][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][5][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][2][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[3][1][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[7][1][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][1][7]_i_1_n_0       | reset_IBUF       |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][1][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[6][2][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[4][1][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[9][2][7]_i_1_n_0       | reset_IBUF       |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][4][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[1][5][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[5][2][7]_i_1_n_0       | reset_IBUF       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/c_queue[8][5][7]_i_1_n_0       | reset_IBUF       |                4 |              8 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/rear[3]_i_1_n_0                | reset_IBUF       |                2 |             10 |         5.00 |
+|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/high_time_cnt[15]_i_1_n_0    | reset_IBUF       |                4 |             16 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/busy_reg_n_0                   | reset_IBUF       |                4 |             20 |         5.00 |
+|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/counter[21]_i_1_n_0          | reset_IBUF       |                9 |             23 |         2.56 |
+|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/FSM_onehot_state_reg_n_0_[7] | reset_IBUF       |                7 |             32 |         4.57 |
+|  clk_IBUF_BUFG | u_dht_controller/u_dht11_main_logic/data[39]_i_1_n_0             | reset_IBUF       |                9 |             40 |         4.44 |
+|  clk_IBUF_BUFG | u_uart_controller/u_data_receiver/time_data[47]_i_1_n_0          | reset_IBUF       |               26 |             48 |         1.85 |
+|  clk_IBUF_BUFG |                                                                  | reset_IBUF       |               63 |            188 |         2.98 |
++----------------+------------------------------------------------------------------+------------------+------------------+----------------+--------------+
 
 
