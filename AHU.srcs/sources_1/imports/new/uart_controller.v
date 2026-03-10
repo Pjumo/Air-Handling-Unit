@@ -5,6 +5,7 @@ module uart_controller(
     input reset,
     input start_trigger,
     input set_time_done,
+    input ds1302_busy,
 
     input [7:0] hum_int,
     input [7:0] hum_dec,
@@ -58,6 +59,7 @@ module uart_controller(
         .rx_data            (w_rx_data),
         .set_time_done      (set_time_done),
         .set_time_trigger   (set_time_trigger),
+        .ds1302_busy        (ds1302_busy),
         .time_data          (time_data)
     );
 

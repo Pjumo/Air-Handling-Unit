@@ -71,7 +71,6 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 2
-set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -88,6 +87,7 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
+  G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/alarm_controller.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/imports/new/btn_debouncer.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/control_tower.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/data_receiver.v
@@ -95,6 +95,7 @@ read_verilog -library xil_defaultlib {
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/dht_controller.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/ds1302_controller.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/imports/new/fnd_controller.v
+  G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/new/rotary.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/imports/new/tick_gen.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/imports/new/uart_controller.v
   G:/Project/FPGA/assignment/AHU/AHU.srcs/sources_1/imports/new/uart_rx.v

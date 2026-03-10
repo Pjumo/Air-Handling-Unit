@@ -17,45 +17,42 @@ module control_tower(
     input [7:0] rtc_month,
     input [7:0] rtc_year,
 
-    input ds1302_busy,
+    input sw0,
+    input [7:0] alarm_hour, 
+    input [7:0] alarm_min, 
 
-    output reg [13:0] fnd_data,
-    output reg ds1302_write_req
+    output reg [13:0] fnd_data
 );
-    reg r_prev;
-    reg ds1302_init;
-    reg mode;   // 0: 공조기, 1: clock
 
-    always @(posedge clk, posedge reset) begin
+    reg r_display_mode; // 0: 온습도 화면, 1: 시간 화면
+    reg r_prev;
+
+    // 모드 전환
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
-            mode <= 1'b0;
+            r_display_mode <= 1'b0;
             r_prev <= 1'b0;
         end else begin
             if (btnL == 1'b1 && r_prev == 1'b0) begin
-                mode <= ~mode;
+                r_display_mode <= ~r_display_mode;
             end
             r_prev <= btnL;
         end
     end
 
-    // ds1302 write_req
-    always @(posedge clk, posedge reset) begin
-        if(reset) begin
-            ds1302_init <= 0;
-        end else begin
-            ds1302_write_req <= 0;
-            if(!ds1302_init && !ds1302_busy) begin
-                ds1302_init <= 1;
-                ds1302_write_req <= 1;
-            end
-        end
-    end
-
     always @(*) begin
-        if (mode == 1'b0) begin
+        if (r_display_mode == 1'b0) begin
+            //  온습도 모드
             fnd_data = (tem_int * 100) + hum_int;
         end else begin
-            fnd_data = (rtc_min * 100) + rtc_sec;
+            // 시계 모드
+            if (sw0 == 1'b1) begin
+                // 알람 설정 모드 - sw on 
+                fnd_data = (alarm_hour * 100) + alarm_min;
+            end else begin
+                // 일반 시계 모드 - sw off
+                fnd_data = (rtc_hour * 100) + rtc_min; 
+            end
         end
     end
 

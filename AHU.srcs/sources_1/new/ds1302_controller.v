@@ -35,14 +35,14 @@ module ds1302_controller(
     localparam READ_SEC     = 8'h81;
     localparam READ_MIN     = 8'h83;
     localparam READ_HOUR    = 8'h85;
-    localparam READ_DATE     = 8'h87;
+    localparam READ_DATE    = 8'h87;
     localparam READ_MONTH   = 8'h89;
     localparam READ_YEAR    = 8'h8D;
 
     localparam WRITE_SEC    = 8'h80;
     localparam WRITE_MIN    = 8'h82;
     localparam WRITE_HOUR   = 8'h84;
-    localparam WRITE_DATE    = 8'h86;
+    localparam WRITE_DATE   = 8'h86;
     localparam WRITE_MONTH  = 8'h88;
     localparam WRITE_YEAR   = 8'h8C;
     localparam WRITE_WP     = 8'h8E;
