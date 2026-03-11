@@ -65,6 +65,8 @@ module data_receiver(
                         end
                         set_time_trigger <= 1;
                         busy <= 1;
+                    end else begin  // set_time command가 아닐 경우
+                        rear <= rear + 1;
                     end
                 end
             end else begin

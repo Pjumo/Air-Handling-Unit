@@ -48,7 +48,7 @@ module ds1302_controller(
     localparam WRITE_WP     = 8'h8E;
 
     reg [2:0] state;
-    reg rw;   // busy는 output reg로 뽑기 가능, rw:0 -> write, 1 -> read
+    reg rw;   // rw:0 -> write, 1 -> read
     reg start;
     reg [7:0] wr_data;
     wire [7:0] rd_data;
@@ -307,7 +307,7 @@ module ds1302_logic(
                     if(counter >= DIVIDER - 1) begin
                         counter <= 0;
                         sclk <= ~sclk;
-                        if(sclk) begin    // sclk 하강엣지마다 데이터 읽기 or o_data 값 바꿈
+                        if(sclk) begin
                             if(rw) begin
                                 rd_shifter <= {i_data, rd_shifter[7:1]};
                             end else begin

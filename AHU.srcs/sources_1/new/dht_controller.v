@@ -189,7 +189,8 @@ module dht11_main_logic(
                 // data에 bit 저장
                 STORE_BIT: begin
                     high_time_cnt <= 0;
-                    data <= {data[38:0], recieved_bit}; // shift 시켜가며 밀기
+                    // shift 시켜가며 밀기
+                    data <= {recieved_bit, data[39:1]};
 
                     if(data_bit_cnt >= 39) begin
                         state <= CHECK_DATA;
@@ -201,12 +202,12 @@ module dht11_main_logic(
 
                 // check sum error 탐지
                 CHECK_DATA : begin
-                    if ((data[39:32] + data[31:24] +
-                         data[23:16] + data[15:8]) == data[7:0]) begin
-                        tem_int <= data[39:32];
-                        tem_dec <= data[31:24];
+                    if ((data[7:0] + data[15:8] +
+                         data[23:16] + data[31:24]) == data[39:32]) begin
+                        tem_int <= data[7:0];
+                        tem_dec <= data[15:8];
                         hum_int <= data[23:16];
-                        hum_dec <= data[15:8];
+                        hum_dec <= data[31:24];
                     end else begin
                         // error 처리 필요
                         hum_int <= 0;
